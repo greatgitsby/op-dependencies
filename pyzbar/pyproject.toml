@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=64", "wheel", 'tomli; python_version < "3.11"']
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pyzbar"
+version = "0.1.9"
+description = "pyzbar barcode reader with bundled zbar library (pre-built)"
+requires-python = ">=3.8"
+
+[tool.setuptools.packages.find]
+include = ["pyzbar*"]
+
+[tool.setuptools.package-data]
+pyzbar = ["install/**/*", "*.so"]
+
+[tool.shim]
+repo_url = "https://github.com/greatgitsby/op-dependencies"
+tag = "pyzbar/v0.1.9"
+datadir = "install"
