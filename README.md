@@ -44,9 +44,6 @@ pre-built wheels are published to PyPI under the `comma-deps-` prefix. the impor
 is unchanged (e.g. `import capnproto`), only the distribution name is prefixed.
 packages require Python 3.12 or newer.
 
-The header-only [Spectra camera UAPI package](spectra-uapi/README.md) provides
-separate, pinned AGNOS and camera_kt include roots for dual ABI consumers.
-
 ```python
 dependencies = [
   "comma-deps-capnproto>=1.0.1,<1.0.2",

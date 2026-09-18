@@ -1,2 +1,0 @@
-include build.py
-recursive-include tests *.py *.cc
