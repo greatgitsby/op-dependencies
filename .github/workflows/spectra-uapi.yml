@@ -1,0 +1,46 @@
+name: spectra-uapi
+
+on:
+  pull_request:
+    paths: ["spectra-uapi/**", ".github/workflows/spectra-uapi.yml", "pyproject.toml"]
+  push:
+    paths: ["spectra-uapi/**", ".github/workflows/spectra-uapi.yml", "pyproject.toml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  headers:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, ubuntu-24.04-arm, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - run: python -m pip install build
+      - run: python spectra-uapi/tests/test_build.py
+      # Build the wheel from a fresh sdist, exercising both build hooks.
+      - run: python -m build spectra-uapi --outdir dist
+      - run: python -m pip install dist/*.whl
+      - run: python -c 'import spectra_uapi; spectra_uapi.smoketest()'
+      - name: GCC ABI checks
+        if: runner.os == 'Linux'
+        env:
+          CC: gcc
+          CXX: g++
+        run: python spectra-uapi/tests/test_headers.py
+      - name: Clang ABI checks
+        if: runner.os == 'Linux'
+        env:
+          CC: clang
+          CXX: clang++
+        run: python spectra-uapi/tests/test_headers.py
+      - uses: actions/upload-artifact@v7
+        with:
+          name: spectra-uapi-${{ matrix.os }}
+          path: dist/*
