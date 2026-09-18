@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-readonly AGNOS_REPO="https://github.com/commaai/agnos-kernel-sdm845.git"
-readonly AGNOS_COMMIT="c368754c26c7b9659de187addc6cccedc6cfb0a0"
-readonly CAMERA_KT_REPO="https://github.com/qualcomm-linux/camera-driver.git"
-readonly CAMERA_KT_COMMIT="56b463cba50c1db1f2cc53ddd8790730f14bd8a8"
+AGNOS_REPO="https://github.com/commaai/agnos-kernel-sdm845.git"
+AGNOS_COMMIT="c368754c26c7b9659de187addc6cccedc6cfb0a0"
+CAMERA_KT_REPO="https://github.com/qualcomm-linux/camera-driver.git"
+CAMERA_KT_COMMIT="56b463cba50c1db1f2cc53ddd8790730f14bd8a8"
 
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null && pwd)"
 cd "$DIR"
