@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+readonly AGNOS_REPO="https://github.com/commaai/agnos-kernel-sdm845.git"
+readonly AGNOS_COMMIT="c368754c26c7b9659de187addc6cccedc6cfb0a0"
+readonly CAMERA_KT_REPO="https://github.com/qualcomm-linux/camera-driver.git"
+readonly CAMERA_KT_COMMIT="56b463cba50c1db1f2cc53ddd8790730f14bd8a8"
+
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null && pwd)"
 cd "$DIR"
 INSTALL_DIR="$DIR/spectra_uapi/install"
@@ -21,9 +26,7 @@ install_headers() {
   cp "$src/$license" "$INSTALL_DIR/$abi/licenses/"
 }
 
-install_headers agnos https://github.com/commaai/agnos-kernel-sdm845.git \
-  c368754c26c7b9659de187addc6cccedc6cfb0a0 include/uapi/media COPYING
+install_headers agnos "$AGNOS_REPO" "$AGNOS_COMMIT" include/uapi/media COPYING
 cp agnos-src/include/uapi/media/msm_camsensor_sdk.h "$INSTALL_DIR/agnos/include/media/"
 
-install_headers camera_kt https://github.com/qualcomm-linux/camera-driver.git \
-  56b463cba50c1db1f2cc53ddd8790730f14bd8a8 camera_kt/include/uapi/camera/media LICENSE.txt
+install_headers camera_kt "$CAMERA_KT_REPO" "$CAMERA_KT_COMMIT" camera_kt/include/uapi/camera/media LICENSE.txt
